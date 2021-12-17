@@ -37,6 +37,8 @@ contract FunDAO {
     uint256 requestedShares;
     uint256 yesVotes;
     uint256 noVotes;
+    uint minTime;
+    uint maxTime;
   }
 
   enum Vote {
@@ -46,7 +48,13 @@ contract FunDAO {
   }
 
 
-  function submitProposal(address _applicant, uint256 _requestedShares) public onlyDelegate {
+  function submitProposal(
+    address _applicant, 
+    uint256 _requestedShares,
+    uint _minTime,
+    uint _maxTime
+  ) public onlyDelegate 
+  {
     require(_applicant != address(0));
     Proposal memory newProposal = Proposal (
       {
@@ -54,7 +62,9 @@ contract FunDAO {
         applicant: _applicant,
         requestedShares: _requestedShares,
         yesVotes: 0,
-        noVotes: 0
+        noVotes: 0,
+        minTime: _minTime,
+        maxTime: _maxTime
       }
     );
     proposals.push(newProposal);
@@ -69,6 +79,19 @@ contract FunDAO {
     }
     else if (_vote == 2) {
       proposals[_indexProposal].noVotes +=1;
+    }
+  }
+
+  function processProposal(uint256 _indexProposal, uint256 _currentTime) public {
+    require(_indexProposal <= proposals.length);
+    require(_currentTime != 0);
+    Proposal memory prop = proposals[_indexProposal]; 
+    console.log("FOOBAR");
+    console.log(prop.minTime); 
+    if (prop.minTime <= _currentTime) {
+      console.log("Process Proposal");
+    } else {
+      console.log("Needs to wait for processing");
     }
   }
 
