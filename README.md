@@ -31,16 +31,16 @@
 
 <h3>---- Structs ----- </h3>
 
-Member { <br></br>
+<h6>Member {</h6> <br></br>
 uint256 id <br></br>
 bool isDelegate <br></br>
 uin256 shares <br></br>
 { 
 
-Proposal {
-  address proposer
-  uint256 yesVotes
-  uint256 noVotes
+<h6> Proposal { </h6> <br></br>
+  address proposer <br></br>
+  uint256 yesVotes <br></br>
+  uint256 noVotes <br></br>
 }
 
 <h3> ----- Enums ------ </h3>
