@@ -54,3 +54,17 @@ describe("Get current proposal", function () {
   });
 });
 
+describe("Test submitVote by index", function () {
+  if("Should get proposal by index & test vote", async function () {
+    const FunDao = await ethers.getContractFactory("FunDAO");
+    const fun = await FunDao.deploy()
+    await fun.deployed();      
+    let proposalIndex = 0; // first proposal in queue
+    let vote = 1; // vote = yes
+    let voteProposalTx = await fun.submitVote(proposalIndex, vote);
+
+    let proposal = await fun.getCurrentProposal();
+    console.log(proposal)
+  });
+});
+

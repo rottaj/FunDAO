@@ -14,11 +14,16 @@ contract FunDAO {
     _;
   }
 
+  modifier onlyMember {
+    require(members[msg.sender].memberAddress != address(0), "Not a member");
+    _;
+  }
+
   mapping (address => Member) members;
   Proposal[] public proposals;
 
   struct Member {
-    uint256 id;
+    address memberAddress;
     bool isDelegate;
     uint256 shares;
   }
@@ -65,4 +70,17 @@ contract FunDAO {
   }
 
 
+  function submitVote(uint256 _indexProposal, uint8 _vote) public onlyMember {
+    require(_vote < 3, "Invalid vote");
+    Proposal memory calledProposal = proposals[_indexProposal];
+    if (_vote == 1) {
+      proposals[_indexProposal].yesVotes += 1;
+    }
+    else if (_vote == 2) {
+      proposals[_indexProposal].noVotes +=1;
+    }
+  }
+
 }
+
+
