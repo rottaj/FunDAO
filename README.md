@@ -20,6 +20,15 @@
 
 --> One proposal at a time, minimum proposal time = 1 week, max = 1 month
 
+
+<h3> ------ Types of Proposals ------- </h3>
+
+--> When a applicant wants to become a member.
+
+--> When a member wants to become a delegate.
+
+--> When a delegate wants something added / changed.
+
 <h3>---- Structs ----- </h3>
 
 Member { <br></br>
