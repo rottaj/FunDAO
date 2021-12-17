@@ -40,3 +40,17 @@ describe("Test delegate", function () {
   });
 });
 
+describe("Get current proposal", function () {
+  it("Should get current proposal", async function () {
+    const FunDao = await ethers.getContractFactory("FunDAO");
+    const fun = await FunDao.deploy()
+    await fun.deployed();   
+    let applicantAddress = "0x71be63f3384f5fb98995898a86b02fb2426c5788";
+    let requestedShares = 10;
+    let proposalTx = await fun.submitProposal(applicantAddress, requestedShares);
+
+    let proposal = await fun.getCurrentProposal();
+    console.log(proposal)
+  });
+});
+

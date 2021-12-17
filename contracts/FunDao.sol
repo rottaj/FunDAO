@@ -15,6 +15,8 @@ contract FunDAO {
   }
 
   mapping (address => Member) members;
+  Proposal[] public proposals;
+
   struct Member {
     uint256 id;
     bool isDelegate;
@@ -23,6 +25,8 @@ contract FunDAO {
 
   struct Proposal {
     address proposer;
+    address applicant;
+    uint256 requestedShares;
     uint256 yesVotes;
     uint256 noVotes;
   }
@@ -42,11 +46,23 @@ contract FunDAO {
     return members[_member];
   }
 
-  /*
-  function submitProposal(Member) public onlyDelegate {
-          
+  function getCurrentProposal() public view returns (Proposal memory) {
+    return proposals[0];
   }
-  */
+
+  function submitProposal(address _applicant, uint256 _requestedShares) public onlyDelegate {
+    require(_applicant != address(0));
+    Proposal memory newProposal = Proposal (
+      {
+        proposer: msg.sender,
+        applicant: _applicant,
+        requestedShares: _requestedShares,
+        yesVotes: 0,
+        noVotes: 0
+      }
+    );
+    proposals.push(newProposal);
+  }
 
 
 }
