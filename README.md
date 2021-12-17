@@ -31,13 +31,13 @@
 
 <h3>---- Structs ----- </h3>
 
-<h6>Member {</h6> <br></br>
+<h4>Member {</h4> <br></br>
 uint256 id <br></br>
 bool isDelegate <br></br>
 uin256 shares <br></br>
 { 
 
-<h6> Proposal { </h6> <br></br>
+<h4> Proposal { </h4> <br></br>
   address proposer <br></br>
   uint256 yesVotes <br></br>
   uint256 noVotes <br></br>
