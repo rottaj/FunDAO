@@ -57,6 +57,13 @@ describe("Test submitVote by index", function () {
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();      
+    let address = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
+    let assignMemberTx = await fun.assignMember(address);
+    
+    let applicantAddress = "0x71be63f3384f5fb98995898a86b02fb2426c5788";
+    let requestedShares = 10;
+    let proposalTx = await fun.submitProposal(applicantAddress, requestedShares);
+
     let proposalIndex = 0; // first proposal in queue
     let vote = 1; // vote = yes
     let voteProposalTx = await fun.submitVote(proposalIndex, vote);
