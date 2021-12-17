@@ -45,24 +45,6 @@ contract FunDAO {
     No
   }
 
-  function assignMember(address _assignee) public onlyDelegate {
-    require(_assignee != address(0), "address can't be 0");
-    members[_assignee].memberAddress = _assignee;
-  }
-
-  function assignDelegate(address _assignee) public onlyDelegate {
-    require(_assignee != address(0), "address can't be 0");
-    members[_assignee].isDelegate = true;
-  }
-
-
-  function getMember(address _member) public view returns (Member memory){
-    return members[_member];
-  }
-
-  function getCurrentProposal() public view returns (Proposal memory) {
-    return proposals[0];
-  }
 
   function submitProposal(address _applicant, uint256 _requestedShares) public onlyDelegate {
     require(_applicant != address(0));
@@ -83,18 +65,32 @@ contract FunDAO {
     require(_vote < 3, "Invalid vote");
     Proposal memory calledProposal = proposals[_indexProposal];
     if (_vote == 1) {
-      console.log("VOTE = 1");
       proposals[_indexProposal].yesVotes += 1;
     }
     else if (_vote == 2) {
-      console.log("VOTE = 2");
       proposals[_indexProposal].noVotes +=1;
-    }
-    else {
-      console.log("ELSE");
     }
   }
 
+
+  function assignMember(address _assignee) public onlyDelegate {
+    require(_assignee != address(0), "address can't be 0");
+    members[_assignee].memberAddress = _assignee;
+  }
+
+  function assignDelegate(address _assignee) public onlyDelegate {
+    require(_assignee != address(0), "address can't be 0");
+    members[_assignee].isDelegate = true;
+  }
+
+
+  function getMember(address _member) public view returns (Member memory){
+    return members[_member];
+  }
+
+  function getCurrentProposal() public view returns (Proposal memory) {
+    return proposals[0];
+  }
 }
 
 
