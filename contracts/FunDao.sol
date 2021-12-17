@@ -45,7 +45,13 @@ contract FunDAO {
     No
   }
 
+  function assignMember(address _assignee) public onlyDelegate {
+    require(_assignee != address(0), "address can't be 0");
+    members[_assignee].memberAddress = _assignee;
+  }
+
   function assignDelegate(address _assignee) public onlyDelegate {
+    require(_assignee != address(0), "address can't be 0");
     members[_assignee].isDelegate = true;
   }
 
