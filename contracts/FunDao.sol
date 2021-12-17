@@ -33,8 +33,8 @@ contract FunDAO {
     No
   }
 
-  function assignDelegate() public onlyDelegate {
-    members[msg.sender].isDelegate = true;
+  function assignDelegate(address _assignee) public onlyDelegate {
+    members[_assignee].isDelegate = true;
   }
 
 
