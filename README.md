@@ -1,7 +1,7 @@
-Fun Dao - A fun dao for frens.
+<h1>Fun Dao - A fun dao for frens. </h1>
 
 
-----------What we want: ---------
+<h3>----------What we want: --------- </h3>
 
 --> Non plutonian.
 
@@ -20,7 +20,7 @@ Fun Dao - A fun dao for frens.
 
 --> One proposal at a time, minimum proposal time = 1 week, max = 1 month
 
----- Structs -----
+<h3>---- Structs ----- </h3>
 
 Vote ( <br></br> 
   Null # Default <br></br>
@@ -35,7 +35,7 @@ uin256 shares <br></br>
 ) 
 
 
------ Mappings -----
+<h3>----- Mappings ----- </h3>
 
 --> members (address => Member)
 
@@ -43,7 +43,7 @@ uin256 shares <br></br>
 
 
 
------- Function ----
+<h3>------ Function ---- </h3>
 
 --> submitVote (onlyMember)
 
@@ -58,6 +58,6 @@ uin256 shares <br></br>
 --> removeDelegator (onlyDelegator) # Votes to remove delegator
 
 
------FunToken-----
+<h3>-----FunToken----- </h3>
 
 ERC-20 Token. Used for voting
