@@ -35,8 +35,6 @@ describe("Test delegate", function () {
     let address = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266" 
     let member = await fun.getMember(address)
     console.log(member)
-
-
   });
 });
 
@@ -55,7 +53,7 @@ describe("Get current proposal", function () {
 });
 
 describe("Test submitVote by index", function () {
-  if("Should get proposal by index & test vote", async function () {
+  it("Should get proposal by index & test vote", async function () {
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();      

@@ -15,6 +15,9 @@ contract FunDAO {
   }
 
   modifier onlyMember {
+    address test = members[msg.sender].memberAddress;
+    console.log(test);
+    console.log(msg.sender);
     require(members[msg.sender].memberAddress != address(0), "Not a member");
     _;
   }
@@ -74,10 +77,15 @@ contract FunDAO {
     require(_vote < 3, "Invalid vote");
     Proposal memory calledProposal = proposals[_indexProposal];
     if (_vote == 1) {
+      console.log("VOTE = 1");
       proposals[_indexProposal].yesVotes += 1;
     }
     else if (_vote == 2) {
+      console.log("VOTE = 2");
       proposals[_indexProposal].noVotes +=1;
+    }
+    else {
+      console.log("ELSE");
     }
   }
 
