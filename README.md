@@ -22,17 +22,24 @@
 
 <h3>---- Structs ----- </h3>
 
-Vote ( <br></br> 
-  Null # Default <br></br>
-  Yes <br></br>
-  No <br></br>
-)
-
-Member ( <br></br>
+Member { <br></br>
 uint256 id <br></br>
 bool isDelegate <br></br>
 uin256 shares <br></br>
-) 
+{ 
+
+Proposal {
+  address proposer
+  uint256 yesVotes
+  uint256 noVotes
+}
+
+<h3> ----- Enums ------ </h3>
+Vote { <br></br> 
+  Null # Default <br></br>
+  Yes <br></br>
+  No <br></br>
+}
 
 
 <h3>----- Mappings ----- </h3>
