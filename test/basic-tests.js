@@ -1,10 +1,24 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
+
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+
+function automateRandomVoting(addresses, contract) {
+  for (i in addresses.length) {
+    contract.submitVote(addresses[i], getRandomInt(3));
+  }
+}
+
+
 describe("Mint Token", function () {
   it("Should return mint a new FUN token", async function () {
-
     var supply = 100000;
+    const addresses = await ethers.getSigners();
     const FunToken = await ethers.getContractFactory("FunToken");
     const fun = await FunToken.deploy(supply);
     await fun.deployed();
@@ -19,6 +33,7 @@ describe("Mint Token", function () {
 
 describe("Initialize FunDao", function () {
   it("Should initialize FunDao without any errors", async function () {
+    const addresses = await ethers.getSigners();
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();
@@ -29,21 +44,21 @@ describe("Initialize FunDao", function () {
 
 describe("Test delegate", function () {
   it("Should return delegate from constructor", async function() {
+    const addresses = await ethers.getSigners();
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();
-    let address = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266" 
-    let member = await fun.getMember(address)
+    let member = await fun.getMember(addresses[0].address)
     console.log(member)
   });
 });
 
 describe("Get current proposal", function () {
   it("Should get current proposal", async function () {
+    const addresses = await ethers.getSigners();
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();   
-    let applicantAddress = "0x71be63f3384f5fb98995898a86b02fb2426c5788";
     let requestedShares = 10;
     let now = new Date()
     let minTime = parseInt(now.setDate(now.getDate()) + (2 * 7));
@@ -51,7 +66,10 @@ describe("Get current proposal", function () {
 
     console.log("MINTIME", minTime)
     console.log("MAXTTIME", maxTime)
-    let proposalTx = await fun.submitProposal(applicantAddress, requestedShares, minTime, maxTime);
+    let proposalTx = await fun.submitProposal(addresses[1].address,
+                                              requestedShares,
+                                              minTime,
+                                              maxTime);
 
     let proposal = await fun.getCurrentProposal();
     console.log(proposal)
@@ -60,20 +78,22 @@ describe("Get current proposal", function () {
 
 describe("Test submitVote by index", function () {
   it("Should get proposal by index & test vote", async function () {
+    const addresses = await ethers.getSigners();
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();      
-    let address = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
-    let assignMemberTx = await fun.assignMember(address);
+    let assignMemberTx = await fun.assignMember(addresses[0].address);
     
-    let applicantAddress = "0x71be63f3384f5fb98995898a86b02fb2426c5788";
     let requestedShares = 10;
     let now = new Date()
     let minTime = parseInt(now.setDate(now.getDate()) + (2 * 7));
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
 
 
-    let proposalTx = await fun.submitProposal(applicantAddress, requestedShares, minTime, maxTime);
+    let proposalTx = await fun.submitProposal(addresses[1].address,
+                                              requestedShares,
+                                              minTime,
+                                              maxTime);
 
     let proposalIndex = 0; // first proposal in queue
     let vote = 1; // vote = yes
@@ -86,13 +106,12 @@ describe("Test submitVote by index", function () {
 
 describe("Test process proposal by index", function () {
   it("Should process proposal (by index)", async function () {
+    const addresses = await ethers.getSigners();
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();      
-    let address = "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266";
-    let assignMemberTx = await fun.assignMember(address);
-    
-    let applicantAddress = "0x71be63f3384f5fb98995898a86b02fb2426c5788";
+    let assignMemberTx = await fun.assignMember(addresses[0].address);
+        
     let requestedShares = 10;
     // initialize testing times
     let now = new Date()
@@ -100,15 +119,24 @@ describe("Test process proposal by index", function () {
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
     let currentTime = parseInt(now.setDate(now.getDate()));
     // create proposal
-    let proposalTx = await fun.submitProposal(applicantAddress, requestedShares, minTime, maxTime);
+    let proposalTx = await fun.submitProposal(addresses[1].address,
+                                              requestedShares,
+                                              minTime,
+                                              maxTime);
 
     let proposalIndex = 0; // first proposal in queue
     let vote = 1; // vote = yes
     let voteProposalTx = await fun.submitVote(proposalIndex, vote);
+    //automate random voting
 
-    let proposal = await fun.getCurrentProposal();   
+    for (let i = 0; i <= addresses.length-1; i++) {
+      let addMemberTx = await fun.assignMember(addresses[i].address);
+      let voteTx = await fun.connect(addresses[i]).submitVote(0, getRandomInt(3));;
+    }
     // process proposal
+
     processProposalTx = await fun.processProposal(0, currentTime);
-     
+    let proposal = await fun.getCurrentProposal();   
+    console.log(proposal)
   });
 });
