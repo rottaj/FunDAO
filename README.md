@@ -21,6 +21,15 @@
 --> One proposal at a time, minimum proposal time = 1 week, max = 1 month
 
 
+<h3>----------- WORKING ------------- </h3>
+
+--> Members can only have 1 vote per proposal..
+      (mapping (Member.address => Proposal.id)
+
+--> assignMembers ==> By delegate || votes.
+
+--> assignDelegate ==> Handled from frontend, n(d) + n(m).
+
 <h3> ------ Types of Proposals ------- </h3>
 
 --> When a applicant wants to become a member.

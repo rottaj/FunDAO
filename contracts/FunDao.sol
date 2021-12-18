@@ -7,6 +7,7 @@ contract FunDAO {
   constructor() {
     console.log(msg.sender);
     members[msg.sender].isDelegate = true;
+    members[msg.sender].memberAddress = msg.sender;
   }
 
   using SafeMath for uint256;
@@ -96,6 +97,7 @@ contract FunDAO {
       console.log("Process Proposal");
       if (prop.yesVotes > prop.noVotes) {
         proposals[_indexProposal].passed = true;
+        assignDelegate(proposals[_indexProposal].applicant); // add applicant to members
         console.log("Yes votes > No Votes");
       } 
       else if (prop.noVotes > prop.yesVotes){
@@ -111,22 +113,22 @@ contract FunDAO {
   // Add modifier that checks if voting allows for approval?
   // Keeping now for testing purposes.. with the expectation that this is not the case of prod.
 
-  function assignMember(address _assignee) public onlyDelegate { // edit so votes allow authorize
+  function assignMember(address _assignee) internal { // called from delegate
     require(_assignee != address(0), "address can't be 0");
     members[_assignee].memberAddress = _assignee;
   }
 
-  function assignDelegate(address _assignee) public onlyDelegate { // edit so votes allow authorize
+  function assignDelegate(address _assignee) public onlyDelegate { // called from delegate
     require(_assignee != address(0), "address can't be 0");
     members[_assignee].isDelegate = true;
   }
 
 
-  function getMember(address _member) public view returns (Member memory){ // edit so votes allow authorizate
+  function getMember(address _member) public view returns (Member memory){ 
     return members[_member]; 
   }
 
-  function getCurrentProposal() public view returns (Proposal memory) {
+  function getCurrentProposal() public view returns (Proposal memory) { // will call by index... lazy
     return proposals[0];
   }
 }

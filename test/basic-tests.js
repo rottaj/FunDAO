@@ -82,13 +82,12 @@ describe("Test submitVote by index", function () {
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();      
-    let assignMemberTx = await fun.assignMember(addresses[0].address);
     
     let requestedShares = 10;
     let now = new Date()
     let minTime = parseInt(now.setDate(now.getDate()) + (2 * 7));
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
-
+    let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
 
     let proposalTx = await fun.submitProposal(addresses[1].address,
                                               requestedShares,
@@ -99,7 +98,8 @@ describe("Test submitVote by index", function () {
     let vote = 1; // vote = yes
     let voteProposalTx = await fun.submitVote(proposalIndex, vote);
 
-    let proposal = await fun.getCurrentProposal();
+    processProposalTx = await fun.processProposal(0, currentTime);
+    let proposal = await fun.getCurrentProposal();   
     console.log(proposal)
   });
 });
