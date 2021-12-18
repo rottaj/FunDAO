@@ -117,7 +117,8 @@ describe("Test process proposal by index", function () {
     let now = new Date()
     let minTime = parseInt(now.setDate(now.getDate()) + (2 * 7));
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
-    let currentTime = parseInt(now.setDate(now.getDate()));
+    //let currentTime = parseInt(now.setDate(now.getDate())); // uncomment if testing time < minTime
+    let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
     // create proposal
     let proposalTx = await fun.submitProposal(addresses[1].address,
                                               requestedShares,
