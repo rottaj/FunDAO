@@ -8,12 +8,11 @@ function getRandomInt(max) {
 }
 
 
-function automateRandomVoting(addresses, contract) {
+function automateRandomVoting(addresses, contract) { 
   for (i in addresses.length) {
     contract.submitVote(addresses[i], getRandomInt(3));
   }
 }
-
 
 describe("Mint Token", function () {
   it("Should return mint a new FUN token", async function () {
@@ -110,7 +109,6 @@ describe("Test process proposal by index", function () {
     const FunDao = await ethers.getContractFactory("FunDAO");
     const fun = await FunDao.deploy()
     await fun.deployed();      
-    let assignMemberTx = await fun.assignMember(addresses[0].address);
         
     let requestedShares = 10;
     // initialize testing times
@@ -131,7 +129,6 @@ describe("Test process proposal by index", function () {
     //automate random voting
 
     for (let i = 0; i <= addresses.length-1; i++) {
-      let addMemberTx = await fun.assignMember(addresses[i].address);
       let voteTx = await fun.connect(addresses[i]).submitVote(0, getRandomInt(3));;
     }
     // process proposal

@@ -6,8 +6,8 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 contract FunDAO {
   constructor() {
     console.log(msg.sender);
-    members[msg.sender].isDelegate = true;
-    members[msg.sender].memberAddress = msg.sender;
+    members[msg.sender].isDelegate = true;          // for 
+    members[msg.sender].memberAddress = msg.sender; //    testing 
   }
 
   using SafeMath for uint256;
