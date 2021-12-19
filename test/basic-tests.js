@@ -127,14 +127,26 @@ describe("Test process proposal by index", function () {
     let vote = 1; // vote = yes
     let voteProposalTx = await fun.submitVote(proposalIndex, vote);
     //automate random voting
-
-    for (let i = 0; i <= addresses.length-1; i++) {
-      let voteTx = await fun.connect(addresses[i]).submitVote(0, getRandomInt(3));;
+  
+    let memberAddresses = []
+    memberAddresses.push(addresses[0]) // initialize memberAddresses
+    for (let i = 1; i <= addresses.length-1; i++) { // iterate through addresses
+      let proposalTx = await fun.submitProposal(addresses[i].address,
+                                                requestedShares,
+                                                minTime,
+                                                maxTime);
+      
+      for (let j = 0; j <= memberAddresses; j++) { // all members vote randomly
+        let voteTx = await fun.connect(memberAddresses[j]).submitVote(0, getRandomInt(3));
+      }
+      processProposalTx = await fun.processProposal(0, currentTime);//process new proposal
+      let proposal = await fun.getCurrentProposal();  //get current
+      console.log(proposal);
+      if (proposal.passed == true) {
+        memberAddresses.push(addresses[i]); // if passed push address to members
+        console.log("TESTING", memberAddresses.length)
+      }
     }
-    // process proposal
 
-    processProposalTx = await fun.processProposal(0, currentTime);
-    let proposal = await fun.getCurrentProposal();   
-    console.log(proposal)
   });
 });
