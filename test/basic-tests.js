@@ -136,15 +136,16 @@ describe("Test process proposal by index", function () {
                                                 minTime,
                                                 maxTime);
       
-      for (let j = 0; j <= memberAddresses; j++) { // all members vote randomly
-        let voteTx = await fun.connect(memberAddresses[j]).submitVote(0, getRandomInt(3));
+      console.log("MEMBERADDRESS LENGTH", memberAddresses.length);
+      for (let j = 0; j <= memberAddresses.length-1; j++) { // all members vote randomly
+        let voteTx = await fun.connect(memberAddresses[j]).submitVote(i, getRandomInt(3));
       }
-      processProposalTx = await fun.processProposal(0, currentTime);//process new proposal
+
+      processProposalTx = await fun.processProposal(i, currentTime);//process new proposal
       let proposal = await fun.getCurrentProposal();  //get current
       console.log(proposal);
       if (proposal.passed == true) {
         memberAddresses.push(addresses[i]); // if passed push address to members
-        console.log("TESTING", memberAddresses.length)
       }
     }
 

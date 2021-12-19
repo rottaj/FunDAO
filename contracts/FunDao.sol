@@ -18,8 +18,8 @@ contract FunDAO {
 
   modifier onlyMember {
     address test = members[msg.sender].memberAddress;
-    console.log(test);
-    console.log(msg.sender);
+    console.log("MSG.SENDER", msg.sender);
+    console.log("SENDER MEMBER ADDRESS", test);
     require(members[msg.sender].memberAddress != address(0), "Not a member");
     _;
   }
@@ -92,11 +92,12 @@ contract FunDAO {
     require(_indexProposal <= proposals.length);
     require(_currentTime != 0);
     Proposal memory prop = proposals[_indexProposal]; 
+    console.log("TESTING? ", prop.applicant);
     if (prop.minTime <= _currentTime) {
       console.log("Process Proposal");
       if (prop.yesVotes > prop.noVotes) {
         proposals[_indexProposal].passed = true;
-        assignDelegate(proposals[_indexProposal].applicant); // add applicant to members
+        assignMember(proposals[_indexProposal].applicant); // add applicant to members
         console.log("Yes votes > No Votes");
       } 
       else if (prop.noVotes > prop.yesVotes){
@@ -128,7 +129,7 @@ contract FunDAO {
   }
 
   function getCurrentProposal() public view returns (Proposal memory) { // will call by index... lazy
-    return proposals[0];
+    return proposals[proposals.length-1];
   }
 }
 
