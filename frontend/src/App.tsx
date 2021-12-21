@@ -1,9 +1,22 @@
 import React from 'react';
 import EnterApp from "./Components/EnterApp"
+import CreateProposalForm from './Containers/CreateProposalForm';
+import ProposalContainer from "./Containers/ProposalContainer";
 import './App.scss';
 
 
 export default class App extends React.Component {
+
+  state = {
+    ProposalFormOpen: false
+  }
+
+  handleProposalForm = () => {
+    this.setState({
+      ProposalFormOpen: !this.state.ProposalFormOpen
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -18,7 +31,15 @@ export default class App extends React.Component {
                   <li className="c-rainbow__layer c-rainbow__layer--yellow">FUN DAO!</li>
               </ul>
       </div>
+      <div>
+        <h2 className="FunDao-Header-h2">A fun DAO for frens</h2>
+      </div>
       <EnterApp/>
+      <div className="CreateProposal-Main">
+          <button onClick={this.handleProposalForm}>Create Proposal</button>
+      </div>
+      <CreateProposalForm isOpen={this.state.ProposalFormOpen}/>
+      <ProposalContainer/>
       </div>
     );
   }
