@@ -7,6 +7,20 @@ interface Props {
 
 export default class CreateProposalForm extends React.Component <Props>{
 
+    state = {
+        requestedShares: 1,
+        vestedETH: 0.8
+    }
+
+    onChangeRequestedShares = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target.value)
+        this.setState({
+            requestedShares: parseInt(e.target.value),
+            vestedETH: parseInt(e.target.value) * 0.08
+        })
+    }
+
+
     render() {
         console.log(this.props.isOpen)
         return (
@@ -14,13 +28,17 @@ export default class CreateProposalForm extends React.Component <Props>{
                 {this.props.isOpen && 
                 <div className="PopUp-Form">
                     <h3>Create New Proposal</h3>
+                    <h3> 1 Share(FUN) = 0.08 ETH</h3>
                     <form className="CreateProposal-Form">
-                        Requested Shares:
-                        <input type="text"/>
+                        Requested FUN:
+                        <input onChange={(e) => this.onChangeRequestedShares(e)} type="text" defaultValue={`${this.state.requestedShares}`}/>
                         <br></br>
                         <br></br>
-                        Vested Shares:
-                        <input type="text"/>
+                        Vested ETH:
+                        <input  type="text" value={`${this.state.vestedETH}`}/>
+                        <br></br>
+                        <br></br>
+                        <button>Submit Proposal</button>
                     </form>
                 </div>
                 }
