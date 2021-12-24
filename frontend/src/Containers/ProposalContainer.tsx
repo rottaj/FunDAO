@@ -41,9 +41,9 @@ export default class ProposalContainer extends React.Component {
         return (
             <div className="ProposalContainer-Main">
                 <h3>Proposals</h3>
-                <Proposal applicant="helloworld" vestedShares={1235} requestedShares={1455} />
-
-                {this.state.propososals.map((proposal) => {return <div><Proposal applicant={proposal[0]} requestedShares={1} vestedShares={1}/> </div>})}
+                {/*<Proposal applicant="helloworld" vestedShares={1235} requestedShares={1455} /> */}
+                {/* Edit this.. add dynamic index numbers */}
+                {this.state.propososals.map((proposal) => {return <div><Proposal proposalIndex={0}applicant={proposal[0]} requestedShares={1} vestedShares={1}/> </div>})}
             </div>
         )
     }

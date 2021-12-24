@@ -1,13 +1,40 @@
 import React from 'react';
+import { ethers } from "ethers";
+import { _abi } from "../interfaces/FunDaoInterface";
 import "./Proposal.scss";
 interface Props {
+    proposalIndex: number;
     applicant: string;
     vestedShares: number;
     requestedShares: number;
     /*timeLeft: number; */
 }
 
+declare let window: any;
+const contractAddress = "0x89d2895cE41466A27A8ba3257919c036fC5b0033";
 export default class Proposal extends React.Component <Props>{
+    async onClickYes() {
+        if (window.ethereum) {
+            await window.ethereum.enable();
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = await provider.getSigner();
+            await signer.getAddress();
+            const contract = new ethers.Contract(contractAddress, _abi, signer)
+            let proposalVoteTxn = await contract.submitVote(this.props.proposalIndex, 1);
+        }
+    }
+
+    async onClickNo() {
+        if (window.ethereum) {
+            await window.ethereum.enable();
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = await provider.getSigner();
+            await signer.getAddress();
+            const contract = new ethers.Contract(contractAddress, _abi, signer)
+            let proposalVoteTxn = await contract.submitVote(this.props.proposalIndex, 2);
+        }
+    }
+
     render() {
         return (
             <div className="Proposal-Main">
@@ -16,8 +43,8 @@ export default class Proposal extends React.Component <Props>{
                     Vested Shares: {this.props.vestedShares}  <br></br>
                     Requested Shares: {this.props.requestedShares}
                 </p> 
-                <button className="Proposal-VoteYes">Vote Yes</button>
-                <button className="Proposal-VoteNo">Vote No</button>
+                <button className="Proposal-VoteYes" onClick={() => this.onClickYes()}>Vote Yes</button>
+                <button className="Proposal-VoteNo" onClick={() => this.onClickNo()}>Vote No</button>
             </div>
         )
     }
