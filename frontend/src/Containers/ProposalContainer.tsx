@@ -15,7 +15,7 @@ type ProposalType = {
 }
 export default class ProposalContainer extends React.Component {
     state = {
-        propososals: []
+        proposals: []
     }
 
     async fetchProposal () {
@@ -26,20 +26,23 @@ export default class ProposalContainer extends React.Component {
             await signer.getAddress();
             console.log(signer);
             const contract = new ethers.Contract(contractAddress, _abi, signer);
-
-            let getProposalTxn = contract.getCurrentProposal(0).then((res: never) => {
-                console.log("RES", res)
-                this.setState({
-                    proposals: this.state.propososals.push(res)
+            let proposalCount = await contract.getProposals()
+            console.log("TESTING", parseInt(proposalCount, 16))
+            for (let i=parseInt(proposalCount, 16)-1; i>=0; i--) {
+                let getProposalTxn = contract.getProposalByIndex(i).then((res: never) => {
+                    console.log("RES", res)
+                    this.setState({
+                        proposals: [...this.state.proposals, res]
+                    })
                 })
-            })
-            console.log(getProposalTxn)
+                console.log(getProposalTxn)
+            }
         }
     }
 
     componentDidMount() {
         this.fetchProposal()
-        console.log("STATE", this.state.propososals[0])
+        console.log("STATE", this.state.proposals)
     }
 
     render() {
@@ -49,7 +52,7 @@ export default class ProposalContainer extends React.Component {
                 <h3>Proposals</h3>
                 {/*<Proposal applicant="helloworld" vestedShares={1235} requestedShares={1455} /> */}
                 {/* Edit this.. add dynamic index numbers */}
-                {this.state.propososals.map((proposal) => {return <div><Proposal proposalIndex={0} 
+                {this.state.proposals.map((proposal, index) => {return <div>{console.log("Index", index)}<Proposal proposalIndex={index} 
                                                                                 applicant={proposal[0]} 
                                                                                 requestedShares={parseInt(proposal[2], 16)} 
                                                                                 vestedShares={parseInt(proposal[2], 16) * 0.08} 
