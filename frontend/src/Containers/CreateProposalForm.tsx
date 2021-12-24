@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import React from 'react';
-import { _abi } from "../interfaces/FunDaoInterface";
+import { contractAddress, _abi } from "../interfaces/FunDaoInterface";
 import "./CreateProposalForm.scss";
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
 
 declare let window: any
 
-const contractAddress = "0x89d2895cE41466A27A8ba3257919c036fC5b0033";
 
 export default class CreateProposalForm extends React.Component <Props>{
 
@@ -45,7 +44,6 @@ export default class CreateProposalForm extends React.Component <Props>{
             console.log(minTime, typeof(minTime))
             const contract = new ethers.Contract(contractAddress, _abi, signer);
             let proposalTxn = contract.submitApplicantProposal(parseInt(e.target[0].value),
-                                                        parseInt(e.target[1].value),
                                                         minTime,
                                                         maxTime)
             console.log("Submitted Proposal: " , proposalTxn)

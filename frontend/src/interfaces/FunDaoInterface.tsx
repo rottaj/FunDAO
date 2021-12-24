@@ -1,3 +1,5 @@
+export const contractAddress = "0xbe446c221c83Eb228f40C25675989790B5bC7f97";
+
 export const _abi = [
   {
     "inputs": [],
@@ -18,7 +20,13 @@ export const _abi = [
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_index",
+        "type": "uint256"
+      }
+    ],
     "name": "getCurrentProposal",
     "outputs": [
       {
@@ -36,11 +44,6 @@ export const _abi = [
           {
             "internalType": "uint256",
             "name": "requestedShares",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "vestedShares",
             "type": "uint256"
           },
           {
@@ -158,11 +161,6 @@ export const _abi = [
       },
       {
         "internalType": "uint256",
-        "name": "vestedShares",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "yesVotes",
         "type": "uint256"
       },
@@ -199,11 +197,6 @@ export const _abi = [
       },
       {
         "internalType": "uint256",
-        "name": "_vestedShares",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_minTime",
         "type": "uint256"
       },
@@ -228,11 +221,6 @@ export const _abi = [
       {
         "internalType": "uint256",
         "name": "_requestedShares",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_vestedShares",
         "type": "uint256"
       },
       {

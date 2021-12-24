@@ -1,17 +1,18 @@
 import React from 'react';
 import { ethers } from "ethers";
-import { _abi } from "../interfaces/FunDaoInterface";
+import { contractAddress, _abi } from "../interfaces/FunDaoInterface";
 import "./Proposal.scss";
 interface Props {
     proposalIndex: number;
     applicant: string;
     vestedShares: number;
     requestedShares: number;
+    yesVotes: number;
+    noVotes: number;
     /*timeLeft: number; */
 }
 
 declare let window: any;
-const contractAddress = "0x89d2895cE41466A27A8ba3257919c036fC5b0033";
 export default class Proposal extends React.Component <Props>{
     async onClickYes() {
         if (window.ethereum) {
@@ -43,6 +44,11 @@ export default class Proposal extends React.Component <Props>{
                     Vested Shares: {this.props.vestedShares}  <br></br>
                     Requested Shares: {this.props.requestedShares}
                 </p> 
+                Yes Votes: {this.props.yesVotes} 
+                &emsp;
+                No Votes: {this.props.noVotes}
+                <br></br>
+                <br></br>
                 <button className="Proposal-VoteYes" onClick={() => this.onClickYes()}>Vote Yes</button>
                 <button className="Proposal-VoteNo" onClick={() => this.onClickNo()}>Vote No</button>
             </div>

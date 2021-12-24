@@ -37,7 +37,6 @@ contract FunDAO {
     address proposer;
     address applicant;
     uint256 requestedShares;
-    uint256 vestedShares;
     uint256 yesVotes;
     uint256 noVotes;
     bool passed;
@@ -54,7 +53,6 @@ contract FunDAO {
 
   function submitApplicantProposal(
     uint256 _requestedShares,
-    uint256 _vestedShares,
     uint _minTime,
     uint _maxTime
     ) public {
@@ -64,7 +62,6 @@ contract FunDAO {
         proposer: msg.sender,
         applicant: msg.sender,
         requestedShares: _requestedShares,
-        vestedShares: _vestedShares,
         yesVotes: 0,
         noVotes: 0,
         passed: false,
@@ -79,7 +76,6 @@ contract FunDAO {
   function submitProposal(
     address _applicant, 
     uint256 _requestedShares,
-    uint256 _vestedShares,
     uint _minTime,
     uint _maxTime
   ) public onlyMember
@@ -90,7 +86,6 @@ contract FunDAO {
         proposer: msg.sender,
         applicant: _applicant,
         requestedShares: _requestedShares,
-        vestedShares: _vestedShares,
         yesVotes: 0,
         noVotes: 0,
         passed: false,
@@ -155,8 +150,8 @@ contract FunDAO {
     return members[_member]; 
   }
 
-  function getCurrentProposal() public view returns (Proposal memory) { // will call by index... lazy
-    return proposals[proposals.length-1];
+  function getCurrentProposal(uint256 _index) public view returns (Proposal memory) { // will call by index... lazy
+    return proposals[_index];
   }
 }
 

@@ -1,13 +1,18 @@
 import React from 'react';
 import Proposal from "../Components/Proposal";
 import { ethers } from 'ethers';
-import { _abi } from "../interfaces/FunDaoInterface";
+import { contractAddress, _abi } from "../interfaces/FunDaoInterface";
 import "./ProposalContainer.scss";
 
 declare let window: any;
-const contractAddress = "0x89d2895cE41466A27A8ba3257919c036fC5b0033";
 
-
+type ProposalType = {
+    applicant: string;
+    maxTime: number;
+    minTime: number;
+    yesVotes: number;
+    noVotes: number;
+}
 export default class ProposalContainer extends React.Component {
     state = {
         propososals: []
@@ -21,8 +26,9 @@ export default class ProposalContainer extends React.Component {
             await signer.getAddress();
             console.log(signer);
             const contract = new ethers.Contract(contractAddress, _abi, signer);
-            let getProposalTxn = contract.getCurrentProposal().then((res: never) => {
-                console.log(res);
+
+            let getProposalTxn = contract.getCurrentProposal(0).then((res: never) => {
+                console.log("RES", res)
                 this.setState({
                     proposals: this.state.propososals.push(res)
                 })
@@ -43,7 +49,7 @@ export default class ProposalContainer extends React.Component {
                 <h3>Proposals</h3>
                 {/*<Proposal applicant="helloworld" vestedShares={1235} requestedShares={1455} /> */}
                 {/* Edit this.. add dynamic index numbers */}
-                {this.state.propososals.map((proposal) => {return <div><Proposal proposalIndex={0}applicant={proposal[0]} requestedShares={1} vestedShares={1}/> </div>})}
+                {this.state.propososals.map((proposal) => {return <div><Proposal proposalIndex={0}applicant={proposal[0]} requestedShares={parseInt(proposal[2], 16)} vestedShares={parseInt(proposal[2], 16) * 0.08} yesVotes={parseInt(proposal[3], 16)} noVotes={parseInt(proposal[4], 16)}/> </div>})}
             </div>
         )
     }
