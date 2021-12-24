@@ -2,6 +2,7 @@ import React from 'react';
 import { ethers } from "ethers";
 import { contractAddress, _abi } from "../interfaces/FunDaoInterface";
 import "./Proposal.scss";
+
 interface Props {
     proposalIndex: number;
     applicant: string;
@@ -9,11 +10,14 @@ interface Props {
     requestedShares: number;
     yesVotes: number;
     noVotes: number;
+    minTime: number;
+    maxTime: number;
     /*timeLeft: number; */
 }
 
 declare let window: any;
 export default class Proposal extends React.Component <Props>{
+
     async onClickYes() {
         if (window.ethereum) {
             await window.ethereum.enable();
@@ -36,14 +40,31 @@ export default class Proposal extends React.Component <Props>{
         }
     }
 
+    handleTime(timestamp: number) {
+        const now = new Date().getTime();
+        console.log(timestamp)
+        const distance = timestamp - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        console.log("TESTING", days, " " , hours, " ", minutes, " ", seconds)
+    }
+
     render() {
         return (
             <div className="Proposal-Main">
+                {this.handleTime(this.props.minTime)}
                 <h2 className="ProposalHeader-h2">{this.props.applicant}'s Proposal</h2>
                 <p>
                     Vested Shares: {this.props.vestedShares}  <br></br>
                     Requested Shares: {this.props.requestedShares}
-                </p> 
+                </p>
+                Min Time left:  
+                <br></br>
+                <br></br>
                 Yes Votes: {this.props.yesVotes} 
                 &emsp;
                 No Votes: {this.props.noVotes}

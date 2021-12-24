@@ -150,8 +150,12 @@ contract FunDAO {
     return members[_member]; 
   }
 
-  function getCurrentProposal(uint256 _index) public view returns (Proposal memory) { // will call by index... lazy
+  function getProposalByIndex(uint256 _index) public view returns (Proposal memory) { // will call by index... lazy
     return proposals[_index];
+  }
+
+  function getProposals() public view returns (uint256) {
+    return proposals.length;
   }
 }
 

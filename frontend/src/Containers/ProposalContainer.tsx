@@ -49,7 +49,15 @@ export default class ProposalContainer extends React.Component {
                 <h3>Proposals</h3>
                 {/*<Proposal applicant="helloworld" vestedShares={1235} requestedShares={1455} /> */}
                 {/* Edit this.. add dynamic index numbers */}
-                {this.state.propososals.map((proposal) => {return <div><Proposal proposalIndex={0}applicant={proposal[0]} requestedShares={parseInt(proposal[2], 16)} vestedShares={parseInt(proposal[2], 16) * 0.08} yesVotes={parseInt(proposal[3], 16)} noVotes={parseInt(proposal[4], 16)}/> </div>})}
+                {this.state.propososals.map((proposal) => {return <div><Proposal proposalIndex={0} 
+                                                                                applicant={proposal[0]} 
+                                                                                requestedShares={parseInt(proposal[2], 16)} 
+                                                                                vestedShares={parseInt(proposal[2], 16) * 0.08} 
+                                                                                yesVotes={parseInt(proposal[3], 16)} 
+                                                                                noVotes={parseInt(proposal[4], 16)}
+                                                                                maxTime={parseInt(proposal[6], 16)}
+                                                                                minTime={parseInt(proposal[7], 16)}
+                                                                                /></div>})}
             </div>
         )
     }

@@ -39,8 +39,8 @@ export default class CreateProposalForm extends React.Component <Props>{
             console.log(accounts);
             console.log(signer);
             let now = new Date();
-            let minTime = now.setDate(now.getDate()) + (2 * 7);
-            let maxTime = now.setDate(now.getDate()) + (4 * 7);
+            let minTime = now.setDate(now.getDate()) + 2 * 7;
+            let maxTime = now.setDate(now.getDate()) + 4 * 7;
             console.log(minTime, typeof(minTime))
             const contract = new ethers.Contract(contractAddress, _abi, signer);
             let proposalTxn = contract.submitApplicantProposal(parseInt(e.target[0].value),
