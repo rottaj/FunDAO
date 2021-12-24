@@ -37,6 +37,7 @@ contract FunDAO {
     address proposer;
     address applicant;
     uint256 requestedShares;
+    uint256 vestedShares;
     uint256 yesVotes;
     uint256 noVotes;
     bool passed;
@@ -49,14 +50,39 @@ contract FunDAO {
     Yes,
     No
   }
+  
+
+  function submitApplicantProposal(
+    uint256 _requestedShares,
+    uint256 _vestedShares,
+    uint _minTime,
+    uint _maxTime
+    ) public {
+    require(msg.sender != address(0));
+    Proposal memory newProposal = Proposal (
+      {
+        proposer: msg.sender,
+        applicant: msg.sender,
+        requestedShares: _requestedShares,
+        vestedShares: _vestedShares,
+        yesVotes: 0,
+        noVotes: 0,
+        passed: false,
+        minTime: _minTime,
+        maxTime: _maxTime
+      }
+    );
+    proposals.push(newProposal);
+  }
 
 
   function submitProposal(
     address _applicant, 
     uint256 _requestedShares,
+    uint256 _vestedShares,
     uint _minTime,
     uint _maxTime
-  ) public onlyDelegate 
+  ) public onlyMember
   {
     require(_applicant != address(0));
     Proposal memory newProposal = Proposal (
@@ -64,6 +90,7 @@ contract FunDAO {
         proposer: msg.sender,
         applicant: _applicant,
         requestedShares: _requestedShares,
+        vestedShares: _vestedShares,
         yesVotes: 0,
         noVotes: 0,
         passed: false,
@@ -77,7 +104,7 @@ contract FunDAO {
 
   function submitVote(uint256 _indexProposal, uint8 _vote) public onlyMember {
     require(_vote < 3, "Invalid vote");
-    Proposal memory calledProposal = proposals[_indexProposal];
+    /*Proposal memory calledProposal = proposals[_indexProposal]; */
     if (_vote == 1) {
       proposals[_indexProposal].yesVotes = proposals[_indexProposal].yesVotes + 1;
       //proposals[_indexProposal] = proposals[_indexProposal].yesVotes.add(1);

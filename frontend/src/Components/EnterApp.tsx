@@ -12,7 +12,7 @@ export default class EnterApp extends React.Component {
             var accounts = await window.ethereum.send('eth_requestAccounts');
             await window.ethereum.enable();
             const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
+            const signer = await provider.getSigner();
             console.log("Signer: ", signer)
         }
     }
