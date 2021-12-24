@@ -25,6 +25,7 @@ export default class Proposal extends React.Component <Props>{
             const signer = await provider.getSigner();
             await signer.getAddress();
             const contract = new ethers.Contract(contractAddress, _abi, signer)
+            console.log("PROPS.INDEX", this.props.proposalIndex)
             let proposalVoteTxn = await contract.submitVote(this.props.proposalIndex, 1);
         }
     }
