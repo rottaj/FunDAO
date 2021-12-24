@@ -16,6 +16,8 @@ export default class Proposal extends React.Component <Props>{
                     Vested Shares: {this.props.vestedShares}  <br></br>
                     Requested Shares: {this.props.requestedShares}
                 </p> 
+                <button className="Proposal-VoteYes">Vote Yes</button>
+                <button className="Proposal-VoteNo">Vote No</button>
             </div>
         )
     }
