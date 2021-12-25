@@ -42,16 +42,12 @@ export default class Proposal extends React.Component <Props>{
     }
 
     handleTime(timestamp: number) {
-        const now = new Date().getTime();
         console.log(timestamp)
-        const distance = timestamp - now;
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-            (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        console.log("TESTING", days, " " , hours, " ", minutes, " ", seconds)
+        console.log("Minti", timestamp * 1000)
+        console.log("Today", new Date().getTime())
+        let minTime = new Date(timestamp * 1000)
+        let today = new Date()
+        console.log(minTime, today)
     }
 
     render() {

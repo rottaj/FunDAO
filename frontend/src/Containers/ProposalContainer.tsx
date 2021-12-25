@@ -58,8 +58,8 @@ export default class ProposalContainer extends React.Component {
                                                                                 vestedShares={parseInt(proposal[2], 16) * 0.08} 
                                                                                 yesVotes={parseInt(proposal[3], 16)} 
                                                                                 noVotes={parseInt(proposal[4], 16)}
-                                                                                maxTime={parseInt(proposal[6], 16)}
-                                                                                minTime={parseInt(proposal[7], 16)}
+                                                                                minTime={parseInt(proposal[6])}
+                                                                                maxTime={parseInt(proposal[7])}
                                                                                 /></div>})}
             </div>
         )
