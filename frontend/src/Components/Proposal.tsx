@@ -18,6 +18,13 @@ interface Props {
 declare let window: any;
 export default class Proposal extends React.Component <Props>{
 
+    state = {
+        days: 0,
+        hours: 0, 
+        minutes: 0,
+        seconds: 0
+    }
+
     async onClickYes() {
         if (window.ethereum) {
             await window.ethereum.enable();
@@ -41,25 +48,36 @@ export default class Proposal extends React.Component <Props>{
         }
     }
 
-    handleTime(timestamp: number) {
-        console.log(timestamp)
-        console.log("Minti", timestamp * 1000)
-        console.log("Today", new Date().getTime())
-        let minTime = new Date(timestamp * 1000)
-        let today = new Date()
-        console.log(minTime, today)
+    handleTime = () => {
+        let timestamp = this.props.minTime
+        let endDate:number = timestamp * 1000
+        let today:number = new Date().getTime()
+        const days = (endDate - today) / (1000 * 60 * 60 * 24);
+        const hours = (endDate - today) / (1000 * 60 * 60) % 24;
+        const minutes = (Math.abs(endDate - today) / (1000 * 60) % 60);
+        const seconds = (Math.abs(endDate - today) / (1000) % 60); 
+        this.setState({
+            days: Math.round(days),
+            hours: Math.round(hours),
+            minutes: Math.round(minutes), 
+            seconds: Math.round(seconds)
+        })
+    }
+
+    componentDidMount() {
+        setInterval(this.handleTime, 1000)
     }
 
     render() {
         return (
             <div className="Proposal-Main">
-                {this.handleTime(this.props.minTime)}
                 <h2 className="ProposalHeader-h2">{this.props.applicant}'s Proposal</h2>
                 <p>
                     Vested Shares: {this.props.vestedShares}  <br></br>
                     Requested Shares: {this.props.requestedShares}
                 </p>
-                Min Time left:  
+                Time left:  
+                {this.state.days} Days {this.state.hours} Hours {this.state.minutes} Minutes {this.state.seconds} Seconds
                 <br></br>
                 <br></br>
                 Yes Votes: {this.props.yesVotes} 
