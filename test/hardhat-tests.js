@@ -65,8 +65,7 @@ describe("Get current proposal", function () {
 
     console.log("MINTIME", minTime)
     console.log("MAXTTIME", maxTime)
-    let proposalTx = await fun.submitProposal(addresses[1].address,
-                                              requestedShares,
+    let proposalTx = await fun.submitProposal(requestedShares,
                                               minTime,
                                               maxTime);
 
@@ -90,7 +89,7 @@ describe("Test submitVote by index", function () {
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
     let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
 
-    let proposalTx = await fun.submitApplicantProposal(requestedShares,
+    let proposalTx = await fun.submitProposal(requestedShares,
                                               minTime,
                                               maxTime);
 
@@ -119,7 +118,7 @@ describe("Test process proposal by index", function () {
     //let currentTime = parseInt(now.setDate(now.getDate())); // uncomment if testing time < minTime
     let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
     // create proposal
-    let proposalTx = await fun.submitApplicantProposal(requestedShares,
+    let proposalTx = await fun.submitProposal(requestedShares,
                                               minTime,
                                               maxTime);
 
@@ -131,7 +130,7 @@ describe("Test process proposal by index", function () {
     let memberAddresses = []
     memberAddresses.push(addresses[0]) // initialize memberAddresses
     for (let i = 1; i <= addresses.length-1; i++) { // iterate through addresses
-      let proposalTx = await fun.submitApplicantProposal(requestedShares,
+      let proposalTx = await fun.submitProposal(requestedShares,
                                                 minTime,
                                                 maxTime);
       
@@ -163,7 +162,7 @@ describe("Test Proposal Approved", function() {
     var minTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()-7).getTime() / 1000;
     //let minTime = parseInt(now.setDate(now.getDate()) - (4 * 7));   
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
-    const proposalTx = await fun.submitApplicantProposal(requestedShares,
+    const proposalTx = await fun.submitProposal(requestedShares,
                                                    minTime,
                                                    maxTime);
     const voteTx = await fun.submitVote(0, 1);

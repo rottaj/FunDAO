@@ -28,7 +28,7 @@ contract FunDAO {
   Proposal[] public proposals;
 
   event SubmitVote(address memberAddress, uint256 proposalIndex, uint8 vote);
-  event SubmitApplicantProposal(address applicantAddress, uint256 requestedShares, uint minTime, uint maxTime);
+  event SubmitProposal(address applicantAddress, uint256 requestedShares, uint minTime, uint maxTime);
   event ProcessProposal(uint256 proposalIndex);
 
   struct Member {
@@ -55,7 +55,7 @@ contract FunDAO {
   }
   
 
-  function submitApplicantProposal(
+  function submitProposal(
     uint256 _requestedShares,
     uint _minTime,
     uint _maxTime
@@ -74,31 +74,7 @@ contract FunDAO {
       }
     );
     proposals.push(newProposal);
-    emit SubmitApplicantProposal(msg.sender, _requestedShares, _minTime, _maxTime);
-  }
-
-
-  function submitProposal(
-    address _applicant, 
-    uint256 _requestedShares,
-    uint _minTime,
-    uint _maxTime
-  ) public onlyMember
-  {
-    require(_applicant != address(0));
-    Proposal memory newProposal = Proposal (
-      {
-        proposer: msg.sender,
-        applicant: _applicant,
-        requestedShares: _requestedShares,
-        yesVotes: 0,
-        noVotes: 0,
-        passed: false,
-        minTime: _minTime,
-        maxTime: _maxTime
-      }
-    );
-    proposals.push(newProposal);
+    emit SubmitProposal(msg.sender, _requestedShares, _minTime, _maxTime);
   }
 
 

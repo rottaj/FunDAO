@@ -46,9 +46,9 @@ export default class CreateProposalForm extends React.Component <Props>{
             let maxTime = nextMonth.getTime() / 1000;
             console.log(minTime, typeof(minTime))
             const contract = new ethers.Contract(contractAddress, _abi, signer);
-            let proposalTxn = contract.submitApplicantProposal(parseInt(e.target[0].value),
-                                                        minTime,
-                                                        maxTime)
+            let proposalTxn = contract.submitProposal(parseInt(e.target[0].value),
+                                                                minTime,
+                                                                maxTime)
             console.log("Submitted Proposal: " , proposalTxn)
         }
     }
