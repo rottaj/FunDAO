@@ -10,6 +10,7 @@ interface Props {
     requestedShares: number;
     yesVotes: number;
     noVotes: number;
+    passed: boolean
     minTime: number;
     maxTime: number;
     /*timeLeft: number; */
@@ -72,6 +73,7 @@ export default class Proposal extends React.Component <Props>{
         return (
             <div className="Proposal-Main">
                 <h2 className="ProposalHeader-h2">{this.props.applicant}'s Proposal</h2>
+                {this.props.passed ? <h3>Passed</h3> : <h3>Not passed</h3>}
                 <p>
                     Vested Shares: {this.props.vestedShares}  <br></br>
                     Requested Shares: {this.props.requestedShares}

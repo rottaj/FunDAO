@@ -39,6 +39,7 @@ export default class CreateProposalForm extends React.Component <Props>{
             console.log(accounts);
             console.log(signer);
             var today = new Date();
+            console.log(today)
             var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
             var nextMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate()+28)
             let minTime = nextweek.getTime() / 1000;
