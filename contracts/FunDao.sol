@@ -120,27 +120,19 @@ contract FunDAO {
   function processProposal(uint256 _indexProposal) public {
     require(_indexProposal <= proposals.length);
     Proposal memory prop = proposals[_indexProposal]; 
-    console.log("TESTING? ", prop.applicant);
-    if (prop.minTime <= block.timestamp) {
-      console.log("Process Proposal");
+    if (prop.minTime <= block.timestamp) { // if time <= current time
       if (prop.yesVotes > prop.noVotes) {
         proposals[_indexProposal].passed = true;
         assignMember(proposals[_indexProposal].applicant); // add applicant to members
-        console.log("Yes votes > No Votes");
+        members[proposals[_indexProposal].applicant].shares += proposals[_indexProposal].requestedShares; // add shares to member
       } 
       else if (prop.noVotes > prop.yesVotes){
         proposals[_indexProposal].passed = false;
-        console.log("No votes > Yes Votes");
       }
     } 
-    else {
-      console.log("Needs to wait for processing");
-    }
     emit ProcessProposal(_indexProposal);
   }
 
-  // Add modifier that checks if voting allows for approval?
-  // Keeping now for testing purposes.. with the expectation that this is not the case of prod.
 
   function assignMember(address _assignee) internal { // called from delegate
     require(_assignee != address(0), "address can't be 0");

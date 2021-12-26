@@ -84,7 +84,9 @@ describe("Test submitVote by index", function () {
     
     let requestedShares = 10;
     let now = new Date()
-    let minTime = parseInt(now.setDate(now.getDate()) + (2 * 7));
+    //let minTime = parseInt(now.setDate(today.getDate()) + (2 * 7));
+    var minTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()-7).getTime() / 1000;
+
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
     let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
 
@@ -148,3 +150,31 @@ describe("Test process proposal by index", function () {
 
   });
 });
+
+describe("Test Proposal Approved", function() {
+  it("Should assign member to members array w/ requested shares", async function() {
+    const addresses = await ethers.getSigners();
+    const FunDao = await ethers.getContractFactory("FunDAO");
+    const fun = await FunDao.deploy()
+    await fun.deployed();
+    let requestedShares = 10;
+    // initialize testing times
+    let now = new Date()
+    var minTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()-7).getTime() / 1000;
+    //let minTime = parseInt(now.setDate(now.getDate()) - (4 * 7));   
+    let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
+    const proposalTx = await fun.submitApplicantProposal(requestedShares,
+                                                   minTime,
+                                                   maxTime);
+    const voteTx = await fun.submitVote(0, 1);
+    let proposal = await fun.getProposalByIndex(0);
+    let proposalLen = await fun.getProposals();
+    let member = await fun.getMember(addresses[0].address);
+    console.log("MinTime: ", minTime)
+    console.log("Proposal Len: ", proposalLen);
+    console.log("Proposal", proposal);
+    console.log("Member", member);
+
+  });
+});
+
