@@ -70,7 +70,7 @@ describe("Get current proposal", function () {
                                               minTime,
                                               maxTime);
 
-    let proposal = await fun.getCurrentProposal();
+    let proposal = await fun.getProposalByIndex(0);
     console.log(proposal)
   });
 });
@@ -88,8 +88,7 @@ describe("Test submitVote by index", function () {
     let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
     let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
 
-    let proposalTx = await fun.submitProposal(addresses[1].address,
-                                              requestedShares,
+    let proposalTx = await fun.submitApplicantProposal(requestedShares,
                                               minTime,
                                               maxTime);
 
@@ -97,8 +96,8 @@ describe("Test submitVote by index", function () {
     let vote = 1; // vote = yes
     let voteProposalTx = await fun.submitVote(proposalIndex, vote);
 
-    processProposalTx = await fun.processProposal(0, currentTime);
-    let proposal = await fun.getCurrentProposal();   
+    processProposalTx = await fun.processProposal(0);
+    let proposal = await fun.getProposalByIndex(0);   
     console.log(proposal)
   });
 });
@@ -118,8 +117,7 @@ describe("Test process proposal by index", function () {
     //let currentTime = parseInt(now.setDate(now.getDate())); // uncomment if testing time < minTime
     let currentTime = parseInt(now.setDate(now.getDate()) + (3 * 7));
     // create proposal
-    let proposalTx = await fun.submitProposal(addresses[1].address,
-                                              requestedShares,
+    let proposalTx = await fun.submitApplicantProposal(requestedShares,
                                               minTime,
                                               maxTime);
 
@@ -131,8 +129,7 @@ describe("Test process proposal by index", function () {
     let memberAddresses = []
     memberAddresses.push(addresses[0]) // initialize memberAddresses
     for (let i = 1; i <= addresses.length-1; i++) { // iterate through addresses
-      let proposalTx = await fun.submitProposal(addresses[i].address,
-                                                requestedShares,
+      let proposalTx = await fun.submitApplicantProposal(requestedShares,
                                                 minTime,
                                                 maxTime);
       
@@ -141,8 +138,8 @@ describe("Test process proposal by index", function () {
         let voteTx = await fun.connect(memberAddresses[j]).submitVote(i, getRandomInt(3));
       }
 
-      processProposalTx = await fun.processProposal(i, currentTime);//process new proposal
-      let proposal = await fun.getCurrentProposal();  //get current
+      processProposalTx = await fun.processProposal(i);//process new proposal
+      let proposal = await fun.getProposalByIndex(i);  //get current
       console.log(proposal);
       if (proposal.passed == true) {
         memberAddresses.push(addresses[i]); // if passed push address to members

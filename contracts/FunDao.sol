@@ -27,6 +27,10 @@ contract FunDAO {
   mapping (address => Member) members;
   Proposal[] public proposals;
 
+  event SubmitVote(address memberAddress, uint256 proposalIndex, uint8 vote);
+  event SubmitApplicantProposal(address applicantAddress, uint256 requestedShares, uint minTime, uint maxTime);
+  event ProcessProposal(uint256 proposalIndex);
+
   struct Member {
     address memberAddress;
     bool isDelegate;
@@ -70,6 +74,7 @@ contract FunDAO {
       }
     );
     proposals.push(newProposal);
+    emit SubmitApplicantProposal(msg.sender, _requestedShares, _minTime, _maxTime);
   }
 
 
@@ -108,14 +113,15 @@ contract FunDAO {
       proposals[_indexProposal].noVotes = proposals[_indexProposal].noVotes + 1; 
       //proposals[_indexProposal] = proposals[_indexProposal].noVotes.add(1);
     }
+    processProposal(_indexProposal);
+    emit SubmitVote(msg.sender, _indexProposal, _vote);
   }
 
-  function processProposal(uint256 _indexProposal, uint256 _currentTime) public {
+  function processProposal(uint256 _indexProposal) public {
     require(_indexProposal <= proposals.length);
-    require(_currentTime != 0);
     Proposal memory prop = proposals[_indexProposal]; 
     console.log("TESTING? ", prop.applicant);
-    if (prop.minTime <= _currentTime) {
+    if (prop.minTime <= block.timestamp) {
       console.log("Process Proposal");
       if (prop.yesVotes > prop.noVotes) {
         proposals[_indexProposal].passed = true;
@@ -130,6 +136,7 @@ contract FunDAO {
     else {
       console.log("Needs to wait for processing");
     }
+    emit ProcessProposal(_indexProposal);
   }
 
   // Add modifier that checks if voting allows for approval?
