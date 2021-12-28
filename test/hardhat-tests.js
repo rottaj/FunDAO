@@ -169,11 +169,18 @@ describe("Test Proposal Approved", function() {
     let proposal = await fun.getProposalByIndex(0);
     let proposalLen = await fun.getProposals();
     let member = await fun.getMember(addresses[0].address);
-    console.log("MinTime: ", minTime)
+    
+    console.log("MEMBER", member);
+    console.log("MinTime: ", minTime);
     console.log("Proposal Len: ", proposalLen);
-    console.log("Proposal", proposal);
     console.log("Member", member);
 
+    console.log("Proposal after first vote", proposal);
+    const voteTxToo = await fun.submitVote(0, 1);
+    console.log("TESTING", voteTxToo);
+    //let proposalTwo = await fun.getProposalByIndex(0);
+    console.log("Proposal after second vote", proposalTwo);
+    expect(Error);
   });
 });
 

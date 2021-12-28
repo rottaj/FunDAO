@@ -8,13 +8,13 @@
 --> Assign delegates, these will be created by 1.) Delegate votes + members votes. 
 (delegate vote = (n(d) / n(m)) where d = delegator & m = members)
 
-----  All Proposals are created by delegators. ----
+---- Applicant Proposals can be sent by anyone, main Proposals & Delegate Proposals are made by members  ----
 
---> Proposal to Vote on next project.
+--> Proposal to Vote on next project (In future).
 
---> Proposal to invest w/ treasury.
+--> Proposal to invest w/ treasury (In future).
 
---> Proposal to vote on changes.
+--> Proposal to vote on changes (In future).
 
 --> Proposal to remove someone from DAO. (Investments will be given back)
 
@@ -23,10 +23,10 @@
 
 <h3>----------- WORKING ------------- </h3>
 
---> Members can only have 1 vote per proposal..
-      (mapping (Member.address => Proposal.id)
+--> Members vote count is based on number of shares they hold.. (I guess this is a plutonian dao. Lol)
+      (mapping (Member.address => Mapping(Proposal.id => shares))
 
---> assignMembers ==> By delegate || votes.
+--> assignMembers ==> votes.
 
 --> assignDelegate ==> Handled from frontend, n(d) + n(m).
 
@@ -48,6 +48,8 @@ uin256 shares <br></br>
 
 <h4> Proposal { </h4> <br></br>
   address proposer <br></br>
+  uint256 requestedShares <br></br>
+  boolean passed <br></br>
   uint256 yesVotes <br></br>
   uint256 noVotes <br></br>
 }
@@ -86,3 +88,10 @@ Vote { <br></br>
 <h3>-----FunToken----- </h3>
 
 ERC-20 Token. Used for voting
+
+<h3>-----Fun Treasury----- </h3>
+Treasury Contract for DAO
+
+<h3>-----Escrow---------</h3>
+Escrow contract for new applicants / delegates.
+Waits for proposal to pass before releasing funds to treasury. Or back to applicant / delegate.

@@ -8,7 +8,7 @@ const PHRASE = process.env.PHRASE;
 
 
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.11",
   networks: {
     rinkeby: {
       url: RINKEBY_URL,

@@ -7,6 +7,7 @@ contract FunDAO {
     console.log(msg.sender);
     members[msg.sender].isDelegate = true;          // for 
     members[msg.sender].memberAddress = msg.sender; //    testing 
+    members[msg.sender].shares = 10;                // only for testing -- delete this!
   }
 
   using SafeMath for uint256;
@@ -25,10 +26,11 @@ contract FunDAO {
   }
 
   mapping (address => Member) members;
+  mapping (address => mapping(uint256 => uint256)) memberVotes; // keep track of member votes per proposal index
   Proposal[] public proposals;
 
   event SubmitVote(address memberAddress, uint256 proposalIndex, uint8 vote);
-  event SubmitProposal(address applicantAddress, uint256 requestedShares, uint minTime, uint maxTime);
+  event SubmitApplicantProposal(address applicantAddress, uint256 requestedShares, uint minTime, uint maxTime);
   event ProcessProposal(uint256 proposalIndex);
 
   struct Member {
@@ -59,7 +61,8 @@ contract FunDAO {
     uint256 _requestedShares,
     uint _minTime,
     uint _maxTime
-    ) public {
+  ) public onlyMember
+  {
     require(msg.sender != address(0));
     Proposal memory newProposal = Proposal (
       {
@@ -74,19 +77,21 @@ contract FunDAO {
       }
     );
     proposals.push(newProposal);
-    emit SubmitProposal(msg.sender, _requestedShares, _minTime, _maxTime);
   }
 
 
   function submitVote(uint256 _indexProposal, uint8 _vote) public onlyMember {
-    require(_vote < 3, "Invalid vote");
+    require(_vote < 3, "INVALID VOTE");
+    require(memberVotes[msg.sender][_indexProposal] == 0, "MEMBER ALREADY VOTED");
     /*Proposal memory calledProposal = proposals[_indexProposal]; */
     if (_vote == 1) {
-      proposals[_indexProposal].yesVotes = proposals[_indexProposal].yesVotes + 1;
+      proposals[_indexProposal].yesVotes = proposals[_indexProposal].yesVotes += members[msg.sender].shares;
+      memberVotes[msg.sender][_indexProposal] += members[msg.sender].shares;
       //proposals[_indexProposal] = proposals[_indexProposal].yesVotes.add(1);
     }
     else if (_vote == 2) {
-      proposals[_indexProposal].noVotes = proposals[_indexProposal].noVotes + 1; 
+      proposals[_indexProposal].noVotes = proposals[_indexProposal].noVotes += members[msg.sender].shares; 
+      memberVotes[msg.sender][_indexProposal] += members[msg.sender].shares;
       //proposals[_indexProposal] = proposals[_indexProposal].noVotes.add(1);
     }
     processProposal(_indexProposal);
