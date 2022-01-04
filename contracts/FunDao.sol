@@ -1,10 +1,15 @@
 pragma solidity ^0.8.11;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "./FunTreasury.sol";
+import "./FunEscrow.sol";
 
 contract FunDAO {
+
+  address public escrowAddress;
   constructor() {
-    console.log(msg.sender);
+    FunEscrow escrow = new FunEscrow(address(this)); // create FunTreasury
+    escrowAddress = address(escrow);
     members[msg.sender].isDelegate = true;          // for 
     members[msg.sender].memberAddress = msg.sender; //    testing 
     members[msg.sender].shares = 10;                // only for testing -- delete this!

@@ -1,5 +1,7 @@
-export const contractAddress = "0x91B7295dcB3CcAe9F91193f8EbfE264E3e7B514c";
-export const _abi =  [
+export const contractAddress = "0x7f26e29B86bf0fBE8EF17ccEB681fC101264f5b6"; // FunDAO address
+
+// ABI for FunDAO contract
+export const _abi = [
   {
     "inputs": [],
     "stateMutability": "nonpayable",
@@ -306,3 +308,6 @@ export const _abi =  [
     "type": "function"
   }
 ]
+
+
+// ABI for FunEscrow contract

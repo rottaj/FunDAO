@@ -4,13 +4,15 @@ import "@openzeppelin/contracts/utils/escrow/RefundEscrow.sol";
 import "@openzeppelin/contracts/utils/escrow/ConditionalEscrow.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-abstract contract FunEscrow is Ownable, RefundEscrow{
+contract FunEscrow is Ownable, RefundEscrow{
   address private _beneficiary;
   constructor(address beneficiary_) {
     _beneficiary = beneficiary_; 
   }
   
   function depositEther() public payable {
+    require(msg.sender != address(0), "INVALID ADDRESS");
+    require(msg.value != 0, "INSUFFICIENT ETHER");
     deposit(msg.sender);
     emit Deposited(msg.sender, msg.value);
   }
