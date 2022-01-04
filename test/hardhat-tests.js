@@ -184,3 +184,31 @@ describe("Test Proposal Approved", function() {
   });
 });
 
+/*
+describe("Test MemberVotes Mapping", function () {
+  it("Should return MemberVotes Mapping", async function () {
+    const addresses = await ethers.getSigners();
+    const FunDao = await ethers.getContractFactory("FunDAO");
+    const fun = await FunDao.deploy()
+    await fun.deployed();
+    let requestedShares = 10;
+    // initialize testing times
+    let now = new Date()
+    var minTime = new Date(now.getFullYear(), now.getMonth(), now.getDate()-7).getTime() / 1000;
+    //let minTime = parseInt(now.setDate(now.getDate()) - (4 * 7));   
+    let maxTime = parseInt(now.setDate(now.getDate()) + (4 * 7));
+    const proposalTxOne = await fun.submitProposal(requestedShares,
+                                                   minTime,
+                                                   maxTime);
+    const voteTxOne = await fun.submitVote(0, 1);
+    const proposalTxTwo = await fun.submitProposal(requestedShares,
+                                                   minTime,
+                                                   maxTime);
+    const voteTxTwo = await fun.submitVote(0, 1);
+  
+    
+       
+  });
+});
+*/
+
