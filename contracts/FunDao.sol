@@ -82,16 +82,16 @@ contract FunDAO {
 
   function submitVote(uint256 _indexProposal, uint8 _vote) public onlyMember {
     require(_vote < 3, "INVALID VOTE");
-    //require(memberVotes[msg.sender][_indexProposal] == 0, "MEMBER ALREADY VOTED");
+    require(memberVotes[msg.sender][_indexProposal] == 0, "MEMBER ALREADY VOTED");
     /*Proposal memory calledProposal = proposals[_indexProposal]; */
     if (_vote == 1) {
       proposals[_indexProposal].yesVotes = proposals[_indexProposal].yesVotes += members[msg.sender].shares;
-      //memberVotes[msg.sender][_indexProposal] += members[msg.sender].shares;
+      memberVotes[msg.sender][_indexProposal] += members[msg.sender].shares;
       //proposals[_indexProposal] = proposals[_indexProposal].yesVotes.add(1);
     }
     else if (_vote == 2) {
       proposals[_indexProposal].noVotes = proposals[_indexProposal].noVotes += members[msg.sender].shares; 
-      //memberVotes[msg.sender][_indexProposal] += members[msg.sender].shares;
+      memberVotes[msg.sender][_indexProposal] += members[msg.sender].shares;
       //proposals[_indexProposal] = proposals[_indexProposal].noVotes.add(1);
     }
     processProposal(_indexProposal);
