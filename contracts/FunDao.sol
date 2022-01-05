@@ -8,7 +8,7 @@ contract FunDAO {
 
   address public escrowAddress;
   constructor() {
-    FunEscrow escrow = new FunEscrow(address(this)); // create FunTreasury
+    FunEscrow escrow = new FunEscrow(payable(address(this))); // create FunTreasury
     escrowAddress = address(escrow);
     members[msg.sender].isDelegate = true;          // for 
     members[msg.sender].memberAddress = msg.sender; //    testing 
