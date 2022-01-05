@@ -41,7 +41,8 @@ export default class CreateProposalForm extends React.Component <Props>{
             console.log(signer);
             var today = new Date();
             console.log(today)
-            var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+            //var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+7);
+            var nextweek = new Date(today.getFullYear(), today.getMonth(), today.getDate()-10); // uncomment when pushing (this is for testing proposal processing)
             var nextMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate()+28)
             let minTime = nextweek.getTime() / 1000;
             let maxTime = nextMonth.getTime() / 1000;

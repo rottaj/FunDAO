@@ -1,4 +1,4 @@
-export const contractAddress = "0xEa8683eF8a362B568D4C41d706A9d985903E84F4"; // FunDAO address
+export const contractAddress = "0x3b6f2eDAf389AF5573A9C673D4B87195b63FE870"; // FunDAO address
 
 // ABI for FunDAO contract
 export const _abi = [
