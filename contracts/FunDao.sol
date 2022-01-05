@@ -7,8 +7,9 @@ import "./FunEscrow.sol";
 contract FunDAO {
 
   address public escrowAddress;
+  FunEscrow escrow;
   constructor() {
-    FunEscrow escrow = new FunEscrow(payable(address(this))); // create FunTreasury
+    escrow = new FunEscrow(payable(address(this))); // create FunTreasury
     escrowAddress = address(escrow);
     members[msg.sender].isDelegate = true;          // for 
     members[msg.sender].memberAddress = msg.sender; //    testing 
@@ -110,10 +111,14 @@ contract FunDAO {
       if (prop.yesVotes > prop.noVotes) {
         proposals[_indexProposal].passed = true;
         assignMember(proposals[_indexProposal].applicant); // add applicant to members
-        members[proposals[_indexProposal].applicant].shares += proposals[_indexProposal].requestedShares; // add shares to member
+        members[proposals[_indexProposal].applicant].shares += proposals[_indexProposal].requestedShares; // add shares
+        // move eth from escrow to treasury.
       } 
       else if (prop.noVotes > prop.yesVotes){
         proposals[_indexProposal].passed = false;
+        // refund eth to applicant
+        escrow.enableWithdrawal(prop.applicant);
+        escrow.withdraw(payable(prop.applicant));
       }
     } 
     emit ProcessProposal(_indexProposal);

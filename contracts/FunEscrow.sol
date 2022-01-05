@@ -25,7 +25,7 @@ contract FunEscrow is Ownable{
     emit Deposited(msg.sender, msg.value);
   }
 
-  function withdraw(address payable _payee) public {
+  function withdraw(address payable _payee) public onlyOwner {
     require(withdrawalAllowed(_payee), "NOT ALLOWED TO WITHDRAWAL");
     uint256 payeePayment = _deposits[_payee];
     _deposits[_payee] = 0;
