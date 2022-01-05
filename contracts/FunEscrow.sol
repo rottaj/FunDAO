@@ -25,16 +25,22 @@ contract FunEscrow is Ownable{
     emit Deposited(msg.sender, msg.value);
   }
 
-  function withdraw(address payable _payee) public payable {
+  function withdraw(address payable _payee) public {
     require(withdrawalAllowed(_payee), "NOT ALLOWED TO WITHDRAWAL");
     uint256 payeePayment = _deposits[_payee];
     _deposits[_payee] = 0;
-    _payee.sendValue(payeePayment);
-    emit Withdrawn(_payee, msg.value);
+    _withdrawalList[_payee] == false;
+    _payee.transfer(payeePayment);
+    emit Withdrawn(_payee, payeePayment);
   }
   
   function withdrawalAllowed(address _payee) public view returns (bool) {
     return _withdrawalList[_payee];
+  }
+
+  function enableWithdrawal(address _payee) public onlyOwner {
+    require(_payee != address(0), "INVALID ADDRESS");
+    _withdrawalList[_payee] == true;
   }
 
 }

@@ -27,6 +27,7 @@ export default class ProposalContainer extends React.Component {
             console.log(signer);
             const contract = new ethers.Contract(contractAddress, _abi, signer);
             console.log("------CONTRACT-----", contract)
+
             let proposalCount = await contract.getProposals()
             console.log("TESTING", parseInt(proposalCount, 16))
             for (let i=parseInt(proposalCount, 16)-1; i>=0; i--) {

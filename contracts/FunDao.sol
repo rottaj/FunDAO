@@ -142,6 +142,7 @@ contract FunDAO {
   function getProposals() public view returns (uint256) {
     return proposals.length;
   }
+
 }
 
 

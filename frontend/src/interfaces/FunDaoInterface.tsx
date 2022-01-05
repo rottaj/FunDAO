@@ -1,4 +1,4 @@
-export const contractAddress = "0x7f26e29B86bf0fBE8EF17ccEB681fC101264f5b6"; // FunDAO address
+export const contractAddress = "0xEa8683eF8a362B568D4C41d706A9d985903E84F4"; // FunDAO address
 
 // ABI for FunDAO contract
 export const _abi = [
@@ -87,6 +87,19 @@ export const _abi = [
     "name": "assignDelegate",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "escrowAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -308,6 +321,3 @@ export const _abi = [
     "type": "function"
   }
 ]
-
-
-// ABI for FunEscrow contract

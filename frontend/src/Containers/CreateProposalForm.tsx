@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import React from 'react';
 import { contractAddress, _abi } from "../interfaces/FunDaoInterface";
+import { _escrow_abi } from "../interfaces/FunEscrowInterface";
 import "./CreateProposalForm.scss";
 
 interface Props {
@@ -46,6 +47,13 @@ export default class CreateProposalForm extends React.Component <Props>{
             let maxTime = nextMonth.getTime() / 1000;
             console.log(minTime, typeof(minTime))
             const contract = new ethers.Contract(contractAddress, _abi, signer);
+            let escrowAddress = await contract.escrowAddress();
+            console.log("ESCROW ADDRESS", escrowAddress)
+            const escrowContract = new ethers.Contract(escrowAddress, _escrow_abi, signer);
+            let paymentTxn = await escrowContract.deposit({
+                value: ethers.utils.parseEther((0.08 * parseInt(e.target[0].value)).toString())
+            });
+            console.log("PAYMENT TXN ", paymentTxn)
             let proposalTxn = contract.submitProposal(parseInt(e.target[0].value),
                                                                 minTime,
                                                                 maxTime)
@@ -55,7 +63,6 @@ export default class CreateProposalForm extends React.Component <Props>{
 
 
     render() {
-        console.log(this.props.isOpen)
         return (
             <div className="CreateProposalForm-Main" >
                 {this.props.isOpen && 
