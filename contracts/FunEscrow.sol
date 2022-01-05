@@ -1,8 +1,5 @@
 pragma solidity ^0.8.11;
 
-import "@openzeppelin/contracts/utils/escrow/RefundEscrow.sol";
-import "@openzeppelin/contracts/utils/escrow/ConditionalEscrow.sol";
-import "@openzeppelin/contracts/utils/escrow/Escrow.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract FunEscrow is Ownable{
@@ -10,7 +7,7 @@ contract FunEscrow is Ownable{
   address payable private _treasury;
 
   constructor(address payable treasury_) public {
-    require(treasury_ != address(0), "INVALID BENEFIFICIARY ADDRESS");
+    require(treasury_ != address(0), "INVALID TREASURY ADDRESS");
     _treasury = treasury_; 
   }
   
@@ -30,7 +27,9 @@ contract FunEscrow is Ownable{
 
   function withdraw(address payable _payee) public payable {
     require(withdrawalAllowed(_payee), "NOT ALLOWED TO WITHDRAWAL");
-    withdraw(_payee);
+    uint256 payeePayment = _deposits[_payee];
+    _deposits[_payee] = 0;
+    _payee.sendValue(payeePayment);
     emit Withdrawn(_payee, msg.value);
   }
   
