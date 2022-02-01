@@ -1,7 +1,7 @@
 <h1>Fun Dao - A fun dao for frens. </h1>
 
 
-<h3>----------What we want: --------- </h3>
+<h3>----------What I want: --------- </h3>
 
 --> Non plutonian.
 
