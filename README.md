@@ -1,97 +1,28 @@
-<h1>Fun Dao - A fun dao for frens. </h1>
+#FunDAO: Non-Plutonian DAO on Ethereum Blockchain
+FunDAO is a Decentralized Autonomous Organization (DAO) hosted on the Ethereum blockchain with the purpose of creating a fair and transparent decision-making process. Our DAO is non-plutonian, which means that we don't have a single entity or group in charge of making decisions for the entire organization. Instead, we use a system of delegates and members to ensure that decisions are made collectively and fairly.
 
+##Delegate System
+Our DAO assigns delegates through a voting process that takes into account both delegate votes and member votes. The delegate vote is calculated as follows:
 
-<h3>----------What I want: --------- </h3>
+```code
+ delegate vote = (n(d) / n(m))
+```
+Where n(d) is the number of delegate votes and n(m) is the number of member votes. This ensures that delegates are chosen based on the support they receive from both delegates and members.
 
---> Non plutonian.
+##Proposals
+Any member of FunDAO can propose an idea for a new project, investment, change, or removal of a member. Main proposals and delegate proposals are made by members. FunDAO allows for one proposal at a time, and the minimum proposal time is one week, while the maximum is one month. This ensures that proposals are carefully considered and discussed before a final decision is made.
 
---> Assign delegates, these will be created by 1.) Delegate votes + members votes. 
-(delegate vote = (n(d) / n(m)) where d = delegator & m = members)
+##Voting on Proposals
+Once a proposal has been made, all members of FunDAO have the opportunity to vote on it. A proposal is considered approved if it receives a majority vote from both delegates and members.
 
----- Applicant Proposals can be sent by anyone, main Proposals & Delegate Proposals are made by members  ----
+##Fun Token
+FunDAO uses an ERC-20 token called "Fun Token". Members can use Fun Token to participate in voting and decision-making processes within the DAO. The number of Fun Tokens a member holds determines their voting power.
 
---> Proposal to Vote on next project (In future).
+##Escrow Contract
+To ensure the safety and security of our members' investments, FunDAO uses an escrow contract. The escrow contract holds funds until a proposal is approved, at which point the funds are released for the intended purpose.
 
---> Proposal to invest w/ treasury (In future).
+##Future Plans
+In the future, FunDAO plans to vote on the next project to invest in, make investments with our treasury, and vote on any changes to our organization. Additionally, we will have the ability to remove members from our DAO, and any investments made by a removed member will be given back to the DAO.
 
---> Proposal to vote on changes (In future).
-
---> Proposal to remove someone from DAO. (Investments will be given back)
-
---> One proposal at a time, minimum proposal time = 1 week, max = 1 month
-
-
-<h3>----------- WORKING ------------- </h3>
-
---> Members vote count is based on number of shares they hold.. (I guess this is a plutonian dao. Lol)
-      (mapping (Member.address => Mapping(Proposal.id => shares))
-
---> assignMembers ==> votes.
-
---> assignDelegate ==> Handled from frontend, n(d) + n(m).
-
-<h3> ------ Types of Proposals ------- </h3>
-
---> When a applicant wants to become a member.
-
---> When a member wants to become a delegate.
-
---> When a delegate wants something added / changed.
-
-<h3>---- Structs ----- </h3>
-
-<h4>Member {</h4> <br></br>
-uint256 id <br></br>
-bool isDelegate <br></br>
-uin256 shares <br></br>
-{ 
-
-<h4> Proposal { </h4> <br></br>
-  address proposer <br></br>
-  uint256 requestedShares <br></br>
-  boolean passed <br></br>
-  uint256 yesVotes <br></br>
-  uint256 noVotes <br></br>
-}
-
-<h3> ----- Enums ------ </h3>
-Vote { <br></br> 
-  Null # Default <br></br>
-  Yes <br></br>
-  No <br></br>
-}
-
-
-<h3>----- Mappings ----- </h3>
-
---> members (address => Member)
-
---> delegates (address => Member[delegate])
-
-
-
-<h3>------ Function ---- </h3>
-
---> submitVote (onlyMember)
-
---> leaveDao (onlyMember)
-
------ Proposal Function ----
-
---> submitProposal (onlyDelegator)
-
---> voteDelegator (onlyDelegator) # Votes for delegator
-
---> removeDelegator (onlyDelegator) # Votes to remove delegator
-
-
-<h3>-----FunToken----- </h3>
-
-ERC-20 Token. Used for voting
-
-<h3>-----Fun Treasury----- </h3>
-Treasury Contract for DAO
-
-<h3>-----Escrow---------</h3>
-Escrow contract for new applicants / delegates.
-Waits for proposal to pass before releasing funds to treasury. Or back to applicant / delegate.
+##Conclusion
+FunDAO is committed to creating a fair and transparent decision-making process for all members. By using a delegate system, carefully considering proposals, and using an escrow contract, we believe that our organization can make a positive impact on the Ethereum community.
